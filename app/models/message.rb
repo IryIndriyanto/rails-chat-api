@@ -1,12 +1,15 @@
 class Message < ApplicationRecord
-    after_create_commit { broadcst_message }
+    belongs_to :user, optional: true
+    after_create_commit { broadcast_message }
 
     private
 
-    def broadcst_message
+    def broadcast_message
         ActionCable.server.broadcast("MessagesChannel", {
             id:,
-            body:
+            body:,
+            created_at:,
+            user: user,
         })
     end
 end
