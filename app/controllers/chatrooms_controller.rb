@@ -10,7 +10,7 @@ class ChatroomsController < ApplicationController
 
   # GET /chatrooms/1
   def show
-    render json: @chatroom
+    render json: @chatroom, include: { messages: { include: :user } }
   end
 
   # POST /chatrooms
